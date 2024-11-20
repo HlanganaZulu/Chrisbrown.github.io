@@ -294,9 +294,9 @@
                     </button>
 
                     -->
-    <p id="message" style="background: #FFF; padding: 10px; padding-top: 20px; padding-bottom: 20px; font-weight: bold;"></p> <!-- Placeholder for message -->
+    <p id="message" style="background: #FFF; padding: 10px; padding-top: 20px; padding-bottom: 5px;"></p> <!-- Placeholder for message -->
 
-            <button id="join-trigger" class="header-btn join-btn"  data-aos="fade-in" data-aos-delay="500" style="font-weight: bold;">
+            <button id="join-trigger" class="header-btn join-btn"  data-aos="fade-in" data-aos-delay="500">
                 <span class="msj-modal">
                      WIN A PHOTOSHOOT <br> with BREEZY
                 </span>
@@ -304,19 +304,87 @@
 
 
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7523555661265068"
-     crossorigin="anonymous"></script>
-<!-- breezy -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-7523555661265068"
-     data-ad-slot="8435917500"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+<div class="slider-container">
+    <div class="slider" id="slider">
+        <img src="assets/img/a.JPG" alt="Image 1">
+        <img src="assets/img/b.JPG" alt="Image 2">
+        <img src="assets/img/c.JPG" alt="Image 3">
+    </div>
+    <div class="pagination" id="pagination">
+        <span class="dot active" data-index="0"></span>
+        <span class="dot" data-index="1"></span>
+        <span class="dot" data-index="2"></span>
+    </div>
+</div>
+<script type="text/javascript">
+const slider = document.getElementById('slider');
+const dots = document.querySelectorAll('.dot');
+let startX;
+let isSwiping = false;
+let currentIndex = 0; // To track the current image index
 
+// Function to update the active dot
+function updateDots() {
+    dots.forEach(dot => dot.classList.remove('active'));
+    dots[currentIndex].classList.add('active');
+}
+
+// Function to handle the swipe action (left or right)
+function swipeTo(direction) {
+    const images = slider.getElementsByTagName('img');
+    const totalImages = images.length;
+    
+    if (direction === 'left') {
+        currentIndex = (currentIndex + 1) % totalImages; // Move right (next image)
+    } else if (direction === 'right') {
+        currentIndex = (currentIndex - 1 + totalImages) % totalImages; // Move left (previous image)
+    }
+
+    // Update the slider's position by translating the images
+    slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+    // Update dots
+    updateDots();
+}
+
+// Handle touch start event to capture the initial swipe position
+slider.addEventListener('touchstart', function(e) {
+    isSwiping = true;
+    startX = e.touches[0].clientX; // Get the starting X position
+});
+
+// Handle touch move event to track the swipe
+slider.addEventListener('touchmove', function(e) {
+    if (!isSwiping) return;
+
+    let moveX = e.touches[0].clientX; // Get the current X position
+    let difference = startX - moveX;
+
+    // If the swipe is significant enough, trigger the swipe action
+    if (Math.abs(difference) > 50) {
+        if (difference > 0) {
+            swipeTo('left'); // Swipe left
+        } else {
+            swipeTo('right'); // Swipe right
+        }
+        isSwiping = false; // End the swipe action
+    }
+});
+
+// Handle touch end event
+slider.addEventListener('touchend', function() {
+    isSwiping = false;
+});
+
+// Add click functionality to dots
+dots.forEach(dot => {
+    dot.addEventListener('click', function() {
+        currentIndex = parseInt(this.getAttribute('data-index'));
+        slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+        updateDots();
+    });
+});
+</script>
     <script>
         const fridayMessages = [
             "By giving to those in need, you open the door to receiving far more than you expect. Success will follow you, and you will meet people who inspire greatness.",
@@ -443,7 +511,7 @@
             </span>
     
             <h2 class="msj-modal">
-                Donate $10 to WIN
+                Donate $50 to WIN
             </h2>
 <div id="donate-button-container">
 <div id="donate-button"></div>
@@ -451,7 +519,7 @@
 <script>
 PayPal.Donation.Button({
 env:'production',
-hosted_button_id:'MS3M2AXXL5REC',
+hosted_button_id:'TLZKXVUVCVFPA',
 image: {
 src:'https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif',
 alt:'Donate with PayPal button',
